@@ -4,227 +4,709 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trey Yadon</title>
+    <meta name="description" content="Trey Yadon — Builder, founder, photographer. San Diego, CA.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --border: #1a1a1a;
+            --border-hover: #2a2a2a;
+            --text: #e5e5e5;
+            --text-secondary: #737373;
+            --text-muted: #525252;
+            --text-bright: #fafafa;
+            --accent: #6366f1;
+            --accent-dim: rgba(99, 102, 241, 0.08);
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --green: #22c55e;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
-            color: #e5e5e5;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .grain {
+        /* ---- Canvas Background ---- */
+        #particles {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
+            pointer-events: none;
         }
 
-        .glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .container {
+        /* ---- Layout ---- */
+        .page {
             position: relative;
             z-index: 1;
-            max-width: 560px;
-            width: 100%;
-            padding: 2rem;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        .name {
-            font-size: 2.5rem;
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            color: #fafafa;
-            margin-bottom: 0.5rem;
+        section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
-        .tagline {
-            font-size: 1.1rem;
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- Hero ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0;
+            opacity: 1;
+            transform: none;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            color: var(--text-bright);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
             font-weight: 300;
-            color: #737373;
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-        }
-
-        .section {
+            color: var(--text-secondary);
             margin-bottom: 2rem;
+            height: 2rem;
         }
 
-        .section-label {
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #525252;
-            margin-bottom: 0.75rem;
-        }
-
-        .project {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid #1a1a1a;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s ease;
-        }
-
-        a.project:hover {
-            border-color: #333;
-        }
-
-        a.project:hover .project-name {
-            color: #fafafa;
-        }
-
-        .project-name {
-            font-size: 0.95rem;
+        .hero-tagline .typed-text {
+            color: var(--accent);
             font-weight: 400;
-            color: #d4d4d4;
-            transition: color 0.2s ease;
         }
 
-        .project-desc {
-            font-size: 0.8rem;
-            color: #525252;
-            font-weight: 300;
+        .hero-tagline .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: var(--accent);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
         }
 
-        .links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 2.5rem;
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
-        .links a {
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 0.85rem;
-            color: #525252;
-            text-decoration: none;
-            font-weight: 400;
-            transition: color 0.2s ease;
+            color: var(--text-muted);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 0.4rem 1rem;
+            width: fit-content;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+        }
+
+        .hero-location {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.4rem;
         }
 
-        .links a:hover {
-            color: #e5e5e5;
+        .hero-location svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--text-muted);
         }
 
-        .links a svg {
+        /* ---- Section Labels ---- */
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        /* ---- About ---- */
+        .about p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 540px;
+        }
+
+        .about p strong {
+            color: var(--text);
+            font-weight: 400;
+        }
+
+        /* ---- Projects ---- */
+        .projects-grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .project-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--border-hover);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-name {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text-bright);
+        }
+
+        .project-role {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 0.25rem 0.65rem;
+            letter-spacing: 0.02em;
+        }
+
+        .project-arrow {
+            position: absolute;
+            top: 1.75rem;
+            right: 1.75rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-arrow {
+            color: var(--accent);
+            transform: translate(2px, -2px);
+        }
+
+        .project-arrow svg {
             width: 16px;
             height: 16px;
             fill: currentColor;
         }
 
-        .dot {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: #22c55e;
-            border-radius: 50%;
-            margin-right: 0.4rem;
-            animation: pulse 2s ease-in-out infinite;
+        /* ---- Interests ---- */
+        .interests-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+        .interest-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.3s ease;
         }
 
-        .status {
+        .interest-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .interest-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .interest-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-bright);
+            margin-bottom: 0.25rem;
+        }
+
+        .interest-detail {
             font-size: 0.8rem;
-            color: #525252;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* ---- Photo Grid ---- */
+        .photo-section {
+            margin-top: 2rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .photo-cell {
+            aspect-ratio: 1;
+            background: var(--surface);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-cell:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
-            margin-bottom: 2.5rem;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 300;
         }
 
-        @media (max-width: 480px) {
-            .name { font-size: 2rem; }
-            .container { padding: 1.5rem; }
+        /* ---- Contact ---- */
+        .contact-section {
+            padding-bottom: 6rem;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 0.6rem 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--text-bright);
+            border-color: var(--border-hover);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .contact-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ---- Footer ---- */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 600px) {
+            .page {
+                padding: 0 1.25rem;
+            }
+
+            section {
+                padding: 3.5rem 0;
+            }
+
+            .interests-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-links {
+                flex-direction: column;
+            }
+
+            .contact-link {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="grain"></div>
-    <div class="glow"></div>
+    <canvas id="particles"></canvas>
 
-    <div class="container">
-        <h1 class="name">Trey Yadon</h1>
-        <p class="tagline">Builder, founder, photographer.<br>San Diego, CA.</p>
-
-        <div class="status">
-            <span class="dot"></span>
-            Building things
-        </div>
-
-        <div class="section">
-            <div class="section-label">Work</div>
-            <a class="project" href="https://opspring.ai" target="_blank">
-                <span class="project-name">OpSpring</span>
-                <span class="project-desc">AI consulting & solutions</span>
-            </a>
-            <a class="project" href="https://pourmemory.com" target="_blank">
-                <span class="project-name">Pour Memory</span>
-                <span class="project-desc">Wine journal app</span>
-            </a>
-        </div>
-
-        <div class="section">
-            <div class="section-label">Interests</div>
-            <div class="project">
-                <span class="project-name">Photography</span>
-                <span class="project-desc">Fuji X100VI</span>
+    <div class="page">
+        <!-- Hero -->
+        <section class="hero">
+            <h1>Trey Yadon</h1>
+            <div class="hero-tagline">
+                <span class="typed-text" id="typed"></span><span class="cursor"></span>
             </div>
-            <div class="project">
-                <span class="project-name">Motorcycles</span>
-                <span class="project-desc">Ducati Monster</span>
+            <div class="status">
+                <span class="status-dot"></span>
+                Building things
             </div>
-        </div>
+            <div class="hero-location">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                San Diego, CA
+            </div>
+        </section>
 
-        <div class="links">
-            <a href="https://github.com/tyadon" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/ryadon" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                LinkedIn
-            </a>
-            <a href="mailto:trey@opspring.ai">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                Email
-            </a>
+        <!-- About -->
+        <section class="about">
+            <div class="section-label">About</div>
+            <p>
+                I'm a <strong>founder and engineer</strong> who builds AI-powered products and tools that solve real problems. Currently running <strong>OpSpring</strong>, an AI consulting and solutions lab, and serving as <strong>CTO of Pour Memory</strong>, a wine journal app. I care about craft, simplicity, and building things that matter.
+            </p>
+        </section>
+
+        <!-- Projects -->
+        <section>
+            <div class="section-label">Projects</div>
+            <div class="projects-grid">
+                <a class="project-card" href="https://opspring.ai" target="_blank" rel="noopener">
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14m-7-7l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="project-header">
+                        <span class="project-name">OpSpring</span>
+                        <span class="project-role">Founder</span>
+                    </div>
+                    <p class="project-desc">AI consulting and solutions lab. Helping businesses integrate AI into their operations — from strategy to production systems.</p>
+                    <div class="project-tags">
+                        <span class="tag">AI/ML</span>
+                        <span class="tag">Consulting</span>
+                        <span class="tag">Full-Stack</span>
+                        <span class="tag">Python</span>
+                    </div>
+                </a>
+                <a class="project-card" href="https://pourmemory.com" target="_blank" rel="noopener">
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14m-7-7l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="project-header">
+                        <span class="project-name">Pour Memory</span>
+                        <span class="project-role">Co-Founder & CTO</span>
+                    </div>
+                    <p class="project-desc">A wine journal iOS app that helps you remember every bottle. Built with SwiftUI, designed for wine lovers who want to track their journey.</p>
+                    <div class="project-tags">
+                        <span class="tag">iOS</span>
+                        <span class="tag">SwiftUI</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">Product</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Interests -->
+        <section>
+            <div class="section-label">Outside the editor</div>
+            <div class="interests-grid">
+                <div class="interest-item">
+                    <div class="interest-icon">📷</div>
+                    <div class="interest-name">Photography</div>
+                    <div class="interest-detail">Fuji X100VI</div>
+                </div>
+                <div class="interest-item">
+                    <div class="interest-icon">🏍️</div>
+                    <div class="interest-name">Motorcycles</div>
+                    <div class="interest-detail">Ducati Monster</div>
+                </div>
+            </div>
+
+            <!-- Photo Grid -->
+            <div class="photo-section">
+                <div class="photo-grid">
+                    <div class="photo-cell">
+                        <img src="photos/1.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=photo-placeholder></div>'">
+                    </div>
+                    <div class="photo-cell">
+                        <img src="photos/2.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=photo-placeholder></div>'">
+                    </div>
+                    <div class="photo-cell">
+                        <img src="photos/3.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=photo-placeholder></div>'">
+                    </div>
+                    <div class="photo-cell">
+                        <img src="photos/4.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=photo-placeholder></div>'">
+                    </div>
+                    <div class="photo-cell">
+                        <img src="photos/5.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=photo-placeholder></div>'">
+                    </div>
+                    <div class="photo-cell">
+                        <img src="photos/6.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=photo-placeholder></div>'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact-section">
+            <div class="section-label">Get in touch</div>
+            <div class="contact-links">
+                <a class="contact-link" href="https://github.com/tyadon" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
+                <a class="contact-link" href="https://www.linkedin.com/in/ryadon" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                </a>
+                <a class="contact-link" href="mailto:trey@opspring.ai">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    Email
+                </a>
+            </div>
+        </section>
+
+        <div class="footer">
+            &copy; 2026 Trey Yadon
         </div>
     </div>
+
+    <script>
+        // ---- Particle Canvas ----
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+        let animFrame;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticles() {
+            particles = [];
+            const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    r: Math.random() * 1.5 + 0.5,
+                    alpha: Math.random() * 0.3 + 0.1,
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const maxDist = 120;
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(99, 102, 241, ${p.alpha})`;
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const q = particles[j];
+                    const dx = p.x - q.x;
+                    const dy = p.y - q.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < maxDist) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(q.x, q.y);
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.06 * (1 - dist / maxDist)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+
+                // Mouse interaction
+                if (mouse.x !== null) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - dist / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            animFrame = requestAnimationFrame(drawParticles);
+        }
+
+        window.addEventListener('resize', () => { resize(); createParticles(); });
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+
+        resize();
+        createParticles();
+        drawParticles();
+
+        // ---- Typing Effect ----
+        const words = ['Builder', 'CTO', 'Founder', 'Photographer', 'Engineer'];
+        const typedEl = document.getElementById('typed');
+        let wordIndex = 0;
+        let charIndex = 0;
+        let deleting = false;
+
+        function type() {
+            const current = words[wordIndex];
+            if (deleting) {
+                typedEl.textContent = current.substring(0, charIndex--);
+                if (charIndex < 0) {
+                    deleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    setTimeout(type, 400);
+                    return;
+                }
+                setTimeout(type, 40);
+            } else {
+                typedEl.textContent = current.substring(0, ++charIndex);
+                if (charIndex === current.length) {
+                    deleting = true;
+                    setTimeout(type, 2000);
+                    return;
+                }
+                setTimeout(type, 80);
+            }
+        }
+
+        setTimeout(type, 600);
+
+        // ---- Scroll Reveal ----
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('section:not(.hero)').forEach(s => observer.observe(s));
+    </script>
 </body>
 </html>
