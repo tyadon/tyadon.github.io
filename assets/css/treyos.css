@@ -343,3 +343,13 @@ html[data-crt="true"] body::after {
 .notes-bar { padding: 12px 16px 0; margin: 0 !important; }
 .note h1 { font: 400 36px/1 var(--display); }
 .note .post-date { color: var(--dim); }
+
+/* Guestbook */
+.gb-form label { display: block; margin-bottom: 8px; font-weight: 600; }
+.gb-form input, .gb-form textarea { display: block; width: 100%; margin-top: 2px; padding: 4px 6px; border: 2px solid var(--ink); background: var(--paper); font: 400 14px/1.4 var(--ui); color: var(--ink); }
+.gb-form .gb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.gb-status { min-height: 1.5em; }
+.gb-entries { list-style: none; padding: 0; margin: 0; }
+.gb-entries li { border-top: 2px dotted var(--ink); padding-top: 8px; margin-top: 8px; }
+.gb-msg { white-space: pre-wrap; overflow-wrap: anywhere; }
+.hits[hidden] { display: none; }

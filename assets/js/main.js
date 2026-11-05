@@ -7,6 +7,10 @@ import { APPS, APP_IDS, getApp } from './apps/index.js';
 import { applyPrefs } from './apps/control.js';
 import { getPref } from './lib/prefs.js';
 import { startPet } from './pet.js';
+import { enabled as guestbookOn, shouldCountHit, recordHit, getHits } from './services/guestbook.js';
+
+// Guestbook and counter only appear once Supabase is configured.
+const visible = (a) => a.id !== 'guestbook' || guestbookOn();
 
 const content = JSON.parse(document.getElementById('treyos-data').textContent);
 const desktop = document.getElementById('desktop');
@@ -18,7 +22,7 @@ const ctx = { content, wm, openApp, prefs: { getPref } };
 
 async function openApp(id) {
   const app = getApp(id);
-  if (!app) return;
+  if (!app || !visible(app)) return;
   if (wm.isOpen(id)) { wm.focus(id); return; }
   const mod = await app.load();
   wm.open(id, { title: app.title, w: app.w, h: app.h, render: (body) => mod.render(body, ctx) });
@@ -33,7 +37,7 @@ function iconFor(app) {
 function buildIcons() {
   const list = desktop.querySelector('.icons');
   let lastPointer = 'mouse';
-  for (const app of APPS.filter((a) => a.desktop)) {
+  for (const app of APPS.filter((a) => a.desktop && visible(a))) {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'icon';
@@ -59,8 +63,8 @@ function buildMenubar() {
   const bar = desktop.querySelector('.menubar');
   const menus = [
     { label: '✱', name: 'TreyOS', items: [['About TreyOS', () => openApp('readme')], ['Control Panel', () => openApp('control')], ['Restart', restart]] },
-    { label: 'Apps', items: APPS.map((a) => [a.title, () => openApp(a.id)]) },
-    { label: 'Special', items: [['Empty Trash', () => openApp('trash')], ['Sign Guestbook', () => openApp('guestbook')]] },
+    { label: 'Apps', items: APPS.filter(visible).map((a) => [a.title, () => openApp(a.id)]) },
+    { label: 'Special', items: [['Empty Trash', () => openApp('trash')], ...(guestbookOn() ? [['Sign Guestbook', () => openApp('guestbook')]] : [])] },
   ];
   bar.innerHTML = '<div class="menus"></div><div class="status"><span class="hits" id="hits" title="Visitors">------</span><span class="city"></span><time class="clock"></time></div>';
   bar.querySelector('.city').textContent = content.site.city;
@@ -163,8 +167,19 @@ function blip() {
   } catch { /* no audio */ }
 }
 
+async function startCounter() {
+  const el = document.getElementById('hits');
+  if (!guestbookOn()) { el.hidden = true; return; }
+  let store = null;
+  try { store = window.sessionStorage; } catch { /* blocked */ }
+  const n = store && shouldCountHit(store) ? await recordHit() : await getHits();
+  el.textContent = n === null ? '------' : String(n).padStart(6, '0');
+  el.title = n === null ? 'Visitor counter offline' : `${n} visitors`;
+}
+
 buildMenubar();
 buildIcons();
+startCounter();
 startPet(desktop.querySelector('.pet-layer'), { onClick: () => openApp('newton'), still: reducedMotion });
 boot(() => {
   desktop.classList.add('is-ready');
