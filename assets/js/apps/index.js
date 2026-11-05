@@ -18,11 +18,11 @@ export const APPS = [
   { id: 'maps', title: 'Maps', w: 560, h: 520, desktop: true, load: mod('./maps.js') },
   { id: 'bookshelf', title: 'Bookshelf', w: 360, h: 260, desktop: true, load: mod('./bookshelf.js') },
   { id: 'garage', title: 'Garage', w: 380, h: 260, desktop: true, load: mod('./garage.js') },
-  { id: 'newton', title: 'Newton.exe', w: 420, h: 540, desktop: true, load: placeholder },
-  { id: 'terminal', title: 'Terminal', w: 520, h: 340, desktop: true, load: placeholder },
+  { id: 'newton', title: 'Newton.exe', w: 420, h: 540, desktop: true, load: mod('./newton.js') },
+  { id: 'terminal', title: 'Terminal', w: 520, h: 340, desktop: true, load: mod('./terminal.js') },
   { id: 'guestbook', title: 'Guestbook', w: 480, h: 520, desktop: true, load: placeholder },
   { id: 'mail', title: 'Mail', w: 380, h: 260, desktop: true, load: mod('./mail.js') },
-  { id: 'control', title: 'Control Panel', w: 400, h: 340, desktop: true, load: placeholder },
+  { id: 'control', title: 'Control Panel', w: 400, h: 340, desktop: true, load: mod('./control.js') },
   { id: 'trash', title: 'Trash', w: 420, h: 300, desktop: true, load: mod('./trash.js') },
 ];
 

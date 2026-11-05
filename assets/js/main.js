@@ -4,13 +4,17 @@ import { isMobile } from './wm-core.js';
 import { parseHash, toHash } from './lib/router.js';
 import { ICONS } from './icons.js';
 import { APPS, APP_IDS, getApp } from './apps/index.js';
+import { applyPrefs } from './apps/control.js';
+import { getPref } from './lib/prefs.js';
+import { startPet } from './pet.js';
 
 const content = JSON.parse(document.getElementById('treyos-data').textContent);
 const desktop = document.getElementById('desktop');
 const wm = createWM(desktop.querySelector('.windows'));
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const ctx = { content, wm, openApp, prefs: null };
+applyPrefs();
+const ctx = { content, wm, openApp, prefs: { getPref } };
 
 async function openApp(id) {
   const app = getApp(id);
@@ -137,13 +141,31 @@ const winRoot = desktop.querySelector('.windows');
 winRoot.addEventListener('wm:open', (e) => {
   if (APP_IDS.includes(e.detail.appId)) history.replaceState(null, '', toHash(e.detail.appId));
 });
+winRoot.addEventListener('wm:open', () => { if (getPref('sound', false)) blip(); });
 winRoot.addEventListener('wm:close', (e) => {
   if (window.location.hash === toHash(e.detail.appId)) history.replaceState(null, '', window.location.pathname);
 });
 window.addEventListener('hashchange', () => openFromHash(null));
 
+// A short square-wave blip when a window opens, only if sound is on.
+let audio;
+function blip() {
+  try {
+    audio = audio || new AudioContext();
+    const o = audio.createOscillator();
+    const g = audio.createGain();
+    o.type = 'square';
+    o.frequency.value = 880;
+    g.gain.value = 0.04;
+    o.connect(g).connect(audio.destination);
+    o.start();
+    o.stop(audio.currentTime + 0.05);
+  } catch { /* no audio */ }
+}
+
 buildMenubar();
 buildIcons();
+startPet(desktop.querySelector('.pet-layer'), { onClick: () => openApp('newton'), still: reducedMotion });
 boot(() => {
   desktop.classList.add('is-ready');
   openFromHash('readme');
