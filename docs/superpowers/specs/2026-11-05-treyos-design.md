@@ -207,6 +207,8 @@ Adapting means light edits for a blog format, never new claims.
 
 ## Guestbook and hit counter (decided)
 
+**Update 2026-11-05:** Supabase's free tier was full, so Trey chose Neon Postgres (Vercel marketplace, free) behind a Vercel Functions project `treyos-api` at https://api.treyyadon.space. Code in `server/`; same validation and rate-limit rules in `server/schema.sql`. The Supabase notes below are historical.
+
 - Backend: **Supabase**, free tier, via the existing Supabase CLI login. Trey's org
   (Vercel-integrated) already has two active projects, `supabase-splititnow` and
   `legwork`. Do not put site tables in either. Create a new project for the site; if the

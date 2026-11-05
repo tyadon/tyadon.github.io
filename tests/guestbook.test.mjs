@@ -58,6 +58,16 @@ test('signEntry surfaces the server error message', async () => {
 test('loadEntries tells offline apart from empty', async () => {
   globalThis.fetch = () => Promise.reject(new Error('offline'));
   assert.deepEqual(await loadEntries(), { ok: false, entries: [] });
-  globalThis.fetch = () => Promise.resolve(new Response('[]', { status: 200 }));
+  globalThis.fetch = () => Promise.resolve(new Response('{"entries":[]}', { status: 200 }));
   assert.deepEqual(await loadEntries(), { ok: true, entries: [] });
+});
+
+test('hits use the API shape', async () => {
+  const calls = [];
+  globalThis.fetch = (url, opts = {}) => { calls.push([url, opts.method || 'GET']); return Promise.resolve(new Response('{"count":42}', { status: 200 })); };
+  const { recordHit } = await import('../assets/js/services/guestbook.js');
+  assert.equal(await getHits(), 42);
+  assert.equal(await recordHit(), 42);
+  assert.deepEqual(calls.map((c) => c[1]), ['GET', 'POST']);
+  assert.ok(calls.every((c) => c[0].endsWith('/api/hits')));
 });

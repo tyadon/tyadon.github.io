@@ -1,7 +1,7 @@
-// Guestbook and hit counter over Supabase RPC. Network failures never throw to callers.
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from '../config.js';
+// Guestbook and hit counter over the TreyOS API. Network failures never throw to callers.
+import { API_BASE } from '../config.js';
 
-export const enabled = () => Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+export const enabled = () => Boolean(API_BASE);
 
 export function validateEntry({ name = '', message = '', website = '', hp = '' }) {
   const n = name.trim();
@@ -24,18 +24,18 @@ export function shouldCountHit(storage) {
   }
 }
 
-async function rpc(fn, args = {}) {
+async function call(path, method = 'GET', body) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 6000);
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
-      method: 'POST',
-      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(args),
+    const res = await fetch(`${API_BASE}${path}`, {
+      method,
+      headers: body ? { 'Content-Type': 'application/json' } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
       signal: ctrl.signal,
     });
-    const body = await res.json().catch(() => null);
-    return res.ok ? { ok: true, data: body } : { ok: false, error: body?.message || `Error ${res.status}` };
+    const data = await res.json().catch(() => null);
+    return res.ok ? { ok: true, data } : { ok: false, error: data?.message || `Error ${res.status}` };
   } catch {
     return { ok: false, error: 'offline' };
   } finally {
@@ -44,9 +44,9 @@ async function rpc(fn, args = {}) {
 }
 
 export async function loadEntries(limit = 50) {
-  const r = await rpc('list_guestbook', { p_limit: limit });
-  const ok = r.ok && Array.isArray(r.data);
-  return { ok, entries: ok ? r.data : [] };
+  const r = await call('/api/guestbook');
+  const ok = r.ok && Array.isArray(r.data?.entries);
+  return { ok, entries: ok ? r.data.entries.slice(0, limit) : [] };
 }
 
 export async function fetchEntries(limit = 50) {
@@ -54,16 +54,16 @@ export async function fetchEntries(limit = 50) {
 }
 
 export async function signEntry({ name, message, website = '', hp = '' }) {
-  const r = await rpc('sign_guestbook', { p_name: name, p_message: message, p_website: website || null, p_hp: hp });
-  return r.ok ? { ok: true, entry: r.data } : { ok: false, error: r.error };
+  const r = await call('/api/guestbook', 'POST', { name, message, website, hp });
+  return r.ok ? { ok: true, entry: r.data.entry } : { ok: false, error: r.error };
 }
 
 export async function recordHit() {
-  const r = await rpc('hit');
-  return r.ok && typeof r.data === 'number' ? r.data : null;
+  const r = await call('/api/hits', 'POST');
+  return r.ok && typeof r.data?.count === 'number' ? r.data.count : null;
 }
 
 export async function getHits() {
-  const r = await rpc('hit_count');
-  return r.ok && typeof r.data === 'number' ? r.data : null;
+  const r = await call('/api/hits');
+  return r.ok && typeof r.data?.count === 'number' ? r.data.count : null;
 }

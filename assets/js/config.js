@@ -1,4 +1,3 @@
-// Supabase project for the guestbook and hit counter. The anon key is public by design;
-// the database only lets it call four functions. Empty values hide the guestbook.
-export const SUPABASE_URL = '';
-export const SUPABASE_ANON_KEY = '';
+// Guestbook and hit counter API (Vercel project treyos-api, backed by Neon Postgres).
+// Empty value hides the guestbook and counter.
+export const API_BASE = 'https://api.treyyadon.space';
