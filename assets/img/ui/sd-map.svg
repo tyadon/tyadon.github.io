@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" shape-rendering="crispEdges">
+  <defs>
+    <pattern id="sea" width="2" height="2" patternUnits="userSpaceOnUse">
+      <rect width="2" height="2" fill="#fff"/><rect width="0.6" height="0.6" fill="#000"/>
+    </pattern>
+  </defs>
+  <rect width="100" height="100" fill="url(#sea)"/>
+  <!-- Land: coast from La Jolla down to the border, Point Loma peninsula, bay carved out -->
+  <path d="M24 0 L22 8 L16 16 L18 22 L21 28 L20 36 L22 40 L19 44 L17 50 L18 54 L19 62 L22 70 L25 74 L27 68 L27 60 L30 58 L36 58 L42 60 L44 64 L46 72 L48 80 L49 88 L52 96 L54 100 L100 100 L100 0 Z" fill="#fff" stroke="#000" stroke-width="0.8"/>
+  <!-- Mission Bay -->
+  <path d="M21 40 L28 39 L31 42 L28 46 L22 45 Z" fill="url(#sea)" stroke="#000" stroke-width="0.6"/>
+  <!-- Coronado -->
+  <path d="M30 66 L38 64 L41 68 L40 74 L44 86 L42 88 L37 76 L31 72 Z" fill="#fff" stroke="#000" stroke-width="0.6"/>
+  <!-- Freeways, dashed -->
+  <path d="M40 0 L40 30 L44 52 L46 64 L52 96" fill="none" stroke="#000" stroke-width="0.4" stroke-dasharray="1.5 1"/>
+  <path d="M60 0 L58 30 L56 52" fill="none" stroke="#000" stroke-width="0.4" stroke-dasharray="1.5 1"/>
+  <g font-family="IBM Plex Mono, monospace" font-size="2.6" fill="#000">
+    <text x="24" y="17">La Jolla</text>
+    <text x="5" y="50">OB</text>
+    <text x="5" y="64">Point Loma</text>
+    <text x="45" y="60">Downtown</text>
+    <text x="57" y="24">Kearny Mesa</text>
+    <text x="60" y="88">Chula Vista</text>
+    <text x="3" y="94">Pacific Ocean</text>
+  </g>
+</svg>
