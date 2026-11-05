@@ -27,14 +27,33 @@
         "Everyone taps what they ordered and pays you on Venmo. Payments show up on your phone as they come in.",
         "Trips mode is for group travel. Everyone adds bills along the way and claims what they had, and at the end the app works out the fewest payments needed to settle up."
       ],
-      "stack": ["React Native (Expo)", "TypeScript", "Next.js", "Supabase"],
+      "stack": [
+        "React Native (Expo)",
+        "TypeScript",
+        "Next.js",
+        "Supabase"
+      ],
       "links": [
-        { "label": "App Store", "url": "https://apps.apple.com/us/app/whos-got-it/id6775676276" },
-        { "label": "whosgotit.app", "url": "https://whosgotit.app" }
+        {
+          "label": "App Store",
+          "url": "https://apps.apple.com/us/app/whos-got-it/id6775676276"
+        },
+        {
+          "label": "whosgotit.app",
+          "url": "https://whosgotit.app"
+        }
       ],
       "color": "#0a8f63",
-      "icon": "",
-      "shots": []
+      "icon": "/assets/img/icons/whosgotit.png",
+      "shots": [
+        "/assets/img/projects/whosgotit-01.jpg",
+        "/assets/img/projects/whosgotit-02.jpg",
+        "/assets/img/projects/whosgotit-03.jpg",
+        "/assets/img/projects/whosgotit-04.jpg",
+        "/assets/img/projects/whosgotit-05.jpg",
+        "/assets/img/projects/whosgotit-06.jpg",
+        "/assets/img/projects/whosgotit-07.jpg"
+      ]
     },
     {
       "id": "pourmemory",
@@ -47,13 +66,25 @@
         "Log the bottle as a memory.",
         "Keep track of your personal cellar."
       ],
-      "stack": ["React Native (Expo)", "Next.js"],
+      "stack": [
+        "React Native (Expo)",
+        "Next.js"
+      ],
       "links": [
-        { "label": "pourmemory.com", "url": "https://pourmemory.com" }
+        {
+          "label": "pourmemory.com",
+          "url": "https://pourmemory.com"
+        }
       ],
       "color": "#74291e",
-      "icon": "",
-      "shots": [],
+      "icon": "/assets/img/icons/pourmemory.png",
+      "shots": [
+        "/assets/img/projects/pourmemory-home.jpg",
+        "/assets/img/projects/pourmemory-cellar.jpg",
+        "/assets/img/projects/pourmemory-journal.jpg",
+        "/assets/img/projects/pourmemory-friends.jpg",
+        "/assets/img/projects/pourmemory-sommelier.jpg"
+      ],
       "note": "I build the iOS app and the web platform behind it."
     }
   ],
@@ -123,28 +154,262 @@
       ]
     }
   ],
-  "darkroom": [],
+  "darkroom": [
+    {
+      "file": "/assets/img/darkroom/002.jpg",
+      "thumb": "/assets/img/darkroom/002-t.jpg",
+      "city": "Paris"
+    },
+    {
+      "file": "/assets/img/darkroom/004.jpg",
+      "thumb": "/assets/img/darkroom/004-t.jpg",
+      "city": "Prague"
+    },
+    {
+      "file": "/assets/img/darkroom/013.jpg",
+      "thumb": "/assets/img/darkroom/013-t.jpg",
+      "city": "Paris"
+    },
+    {
+      "file": "/assets/img/darkroom/022.jpg",
+      "thumb": "/assets/img/darkroom/022-t.jpg",
+      "city": "London"
+    },
+    {
+      "file": "/assets/img/darkroom/026.jpg",
+      "thumb": "/assets/img/darkroom/026-t.jpg",
+      "city": "Prague"
+    },
+    {
+      "file": "/assets/img/darkroom/031.jpg",
+      "thumb": "/assets/img/darkroom/031-t.jpg",
+      "city": "Prague"
+    },
+    {
+      "file": "/assets/img/darkroom/040.jpg",
+      "thumb": "/assets/img/darkroom/040-t.jpg",
+      "city": "Amsterdam"
+    },
+    {
+      "file": "/assets/img/darkroom/090.jpg",
+      "thumb": "/assets/img/darkroom/090-t.jpg",
+      "city": "Prague"
+    },
+    {
+      "file": "/assets/img/darkroom/098.jpg",
+      "thumb": "/assets/img/darkroom/098-t.jpg",
+      "city": "Prague"
+    },
+    {
+      "file": "/assets/img/darkroom/119.jpg",
+      "thumb": "/assets/img/darkroom/119-t.jpg",
+      "city": "Prague"
+    },
+    {
+      "file": "/assets/img/darkroom/122.jpg",
+      "thumb": "/assets/img/darkroom/122-t.jpg",
+      "city": "London"
+    },
+    {
+      "file": "/assets/img/darkroom/162.jpg",
+      "thumb": "/assets/img/darkroom/162-t.jpg",
+      "city": "London"
+    },
+    {
+      "file": "/assets/img/darkroom/164.jpg",
+      "thumb": "/assets/img/darkroom/164-t.jpg",
+      "city": "Dublin"
+    },
+    {
+      "file": "/assets/img/darkroom/169.jpg",
+      "thumb": "/assets/img/darkroom/169-t.jpg",
+      "city": "Dublin"
+    },
+    {
+      "file": "/assets/img/darkroom/196.jpg",
+      "thumb": "/assets/img/darkroom/196-t.jpg",
+      "city": "Prague"
+    },
+    {
+      "file": "/assets/img/darkroom/233.jpg",
+      "thumb": "/assets/img/darkroom/233-t.jpg",
+      "city": "Prague"
+    },
+    {
+      "file": "/assets/img/darkroom/255.jpg",
+      "thumb": "/assets/img/darkroom/255-t.jpg",
+      "city": "Amsterdam"
+    },
+    {
+      "file": "/assets/img/darkroom/286.jpg",
+      "thumb": "/assets/img/darkroom/286-t.jpg",
+      "city": "Amsterdam"
+    },
+    {
+      "file": "/assets/img/darkroom/298.jpg",
+      "thumb": "/assets/img/darkroom/298-t.jpg",
+      "city": "London"
+    },
+    {
+      "file": "/assets/img/darkroom/302.jpg",
+      "thumb": "/assets/img/darkroom/302-t.jpg",
+      "city": "Paris"
+    },
+    {
+      "file": "/assets/img/darkroom/309.jpg",
+      "thumb": "/assets/img/darkroom/309-t.jpg",
+      "city": "Paris"
+    },
+    {
+      "file": "/assets/img/darkroom/313.jpg",
+      "thumb": "/assets/img/darkroom/313-t.jpg",
+      "city": "Paris"
+    },
+    {
+      "file": "/assets/img/darkroom/317.jpg",
+      "thumb": "/assets/img/darkroom/317-t.jpg",
+      "city": "London"
+    },
+    {
+      "file": "/assets/img/darkroom/321.jpg",
+      "thumb": "/assets/img/darkroom/321-t.jpg",
+      "city": "London"
+    }
+  ],
   "cellar": [
-    { "name": "Donnafugata Sedàra", "place": "Sicily", "date": "2026-10-26", "bottle": { "glass": "#2a0f0a", "label": "#c0392b", "accent": "#f4d03f", "motif": "face" } },
-    { "name": "La Vela Bolina", "place": "Sicily", "date": "2026-10-25", "bottle": { "glass": "#1b1b1b", "label": "#222222", "accent": "#c9a227", "motif": "script" } },
-    { "name": "Antek", "place": "Sicily", "date": "2026-10-25", "bottle": { "glass": "#3b0d0d", "label": "#f5f1e8", "accent": "#c0392b", "motif": "square" } },
-    { "name": "Camarda Nerello Mascalese", "place": "Sicily", "date": "2026-10-23", "bottle": { "glass": "#4a3b1f", "label": "#efe6d2", "accent": "#333333", "motif": "flowers" } },
-    { "name": "Pitanga", "place": "Sicily", "date": "2026-10-22", "bottle": { "glass": "#1c1c1c", "label": "#111111", "accent": "#ffffff", "motif": "lines" } },
-    { "name": "Le Fontane Cerasuolo di Vittoria Classico", "place": "Sicily", "date": "2026-10", "bottle": { "glass": "#2b0f0f", "label": "#efe3c8", "accent": "#b0302a", "motif": "diamonds" } },
-    { "name": "Kaid Syrah", "place": "Sicily", "date": "2026-10-20", "bottle": { "glass": "#141414", "label": "#111111", "accent": "#c9a227", "motif": "letters" } }
+    {
+      "name": "Donnafugata Sedàra",
+      "place": "Sicily",
+      "date": "2026-10-26",
+      "bottle": {
+        "glass": "#2a0f0a",
+        "label": "#c0392b",
+        "accent": "#f4d03f",
+        "motif": "face"
+      }
+    },
+    {
+      "name": "La Vela Bolina",
+      "place": "Sicily",
+      "date": "2026-10-25",
+      "bottle": {
+        "glass": "#1b1b1b",
+        "label": "#222222",
+        "accent": "#c9a227",
+        "motif": "script"
+      }
+    },
+    {
+      "name": "Antek",
+      "place": "Sicily",
+      "date": "2026-10-25",
+      "bottle": {
+        "glass": "#3b0d0d",
+        "label": "#f5f1e8",
+        "accent": "#c0392b",
+        "motif": "square"
+      }
+    },
+    {
+      "name": "Camarda Nerello Mascalese",
+      "place": "Sicily",
+      "date": "2026-10-23",
+      "bottle": {
+        "glass": "#4a3b1f",
+        "label": "#efe6d2",
+        "accent": "#333333",
+        "motif": "flowers"
+      }
+    },
+    {
+      "name": "Pitanga",
+      "place": "Sicily",
+      "date": "2026-10-22",
+      "bottle": {
+        "glass": "#1c1c1c",
+        "label": "#111111",
+        "accent": "#ffffff",
+        "motif": "lines"
+      }
+    },
+    {
+      "name": "Le Fontane Cerasuolo di Vittoria Classico",
+      "place": "Sicily",
+      "date": "2026-10",
+      "bottle": {
+        "glass": "#2b0f0f",
+        "label": "#efe3c8",
+        "accent": "#b0302a",
+        "motif": "diamonds"
+      }
+    },
+    {
+      "name": "Kaid Syrah",
+      "place": "Sicily",
+      "date": "2026-10-20",
+      "bottle": {
+        "glass": "#141414",
+        "label": "#111111",
+        "accent": "#c9a227",
+        "motif": "letters"
+      }
+    }
   ],
   "maps": [
-    { "name": "Mikiya Wagyu Shabu House", "area": "Convoy, Kearny Mesa", "x": 50, "y": 30 },
-    { "name": "Flama Llama", "area": "Convoy, Kearny Mesa", "x": 55, "y": 27 },
-    { "name": "Koon Thai Kitchen", "area": "Convoy, Kearny Mesa", "x": 52, "y": 35 },
-    { "name": "Cesarina", "area": "Point Loma", "x": 24, "y": 55 },
-    { "name": "It's Raw Poke Shop", "area": "Ocean Beach", "x": 17, "y": 51 },
-    { "name": "Mitch's Seafood", "area": "Point Loma", "x": 27, "y": 63 },
-    { "name": "Animae", "area": "Downtown", "x": 41, "y": 62 },
-    { "name": "Tacos El Gordo", "area": "Chula Vista", "x": 58, "y": 90 }
+    {
+      "name": "Mikiya Wagyu Shabu House",
+      "area": "Convoy, Kearny Mesa",
+      "x": 50,
+      "y": 30
+    },
+    {
+      "name": "Flama Llama",
+      "area": "Convoy, Kearny Mesa",
+      "x": 55,
+      "y": 27
+    },
+    {
+      "name": "Koon Thai Kitchen",
+      "area": "Convoy, Kearny Mesa",
+      "x": 52,
+      "y": 35
+    },
+    {
+      "name": "Cesarina",
+      "area": "Point Loma",
+      "x": 24,
+      "y": 55
+    },
+    {
+      "name": "It's Raw Poke Shop",
+      "area": "Ocean Beach",
+      "x": 17,
+      "y": 51
+    },
+    {
+      "name": "Mitch's Seafood",
+      "area": "Point Loma",
+      "x": 27,
+      "y": 63
+    },
+    {
+      "name": "Animae",
+      "area": "Downtown",
+      "x": 41,
+      "y": 62
+    },
+    {
+      "name": "Tacos El Gordo",
+      "area": "Chula Vista",
+      "x": 58,
+      "y": 90
+    }
   ],
   "bookshelf": {
-    "current": { "title": "Crime and Punishment", "author": "Fyodor Dostoevsky" }
+    "current": {
+      "title": "Crime and Punishment",
+      "author": "Fyodor Dostoevsky"
+    }
   },
   "garage": {
     "bike": "2024 Ducati Monster Plus",
@@ -156,7 +421,7 @@
   "newton": {
     "born": "2014-09",
     "breed": "Samoyed mix",
-    "photo": "",
+    "photo": "/assets/img/newton/newton.jpg",
     "facts": [
       "Samoyed mix, born September 2014.",
       "Wears ski goggles in the snow, as you can see.",
@@ -166,8 +431,14 @@
   "mail": {
     "email": "itstreyyadon@gmail.com",
     "links": [
-      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/ryadon" },
-      { "label": "GitHub", "url": "https://github.com/tyadon" }
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/ryadon"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/tyadon"
+      }
     ]
   }
 }
