@@ -11,7 +11,7 @@ export const APPS = [
   { id: 'readme', title: 'ReadMe', w: 460, h: 420, desktop: true, load: mod('./readme.js') },
   { id: 'whosgotit', title: "Who's Got It", w: 620, h: 560, desktop: true, load: project('whosgotit') },
   { id: 'pourmemory', title: 'Pour Memory', w: 620, h: 560, desktop: true, load: project('pourmemory') },
-  { id: 'notes', title: 'Notes', w: 560, h: 520, desktop: true, load: placeholder },
+  { id: 'notes', title: 'Notes', w: 560, h: 520, desktop: true, load: mod('./notes.js') },
   { id: 'darkroom', title: 'Darkroom', w: 640, h: 520, desktop: true, load: mod('./darkroom.js') },
   { id: 'archive', title: 'Archive', w: 440, h: 300, desktop: true, load: mod('./archive.js') },
   { id: 'cellar', title: 'Cellar', w: 560, h: 340, desktop: true, load: mod('./cellar.js') },

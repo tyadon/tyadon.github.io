@@ -1,0 +1,19 @@
+/* Plain article pages: readable first, TreyOS second. */
+:root { --ink: #000; --paper: #fff; --dim: #555; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.65 'IBM Plex Mono', ui-monospace, Menlo, monospace; }
+a { color: inherit; }
+:focus-visible { outline: 2px dashed var(--ink); outline-offset: 2px; }
+.post-bar { display: flex; gap: 20px; padding: 6px 16px; border-bottom: 2px solid var(--ink); font-weight: 600; font-size: 14px; }
+.post-bar a { text-decoration: none; }
+.post-bar a:hover { background: var(--ink); color: var(--paper); }
+.post-main { max-width: 66ch; margin: 0 auto; padding: 40px 16px 80px; }
+.post h1, .post-main > h1 { font: 400 48px/1 'VT323', monospace; margin: 0 0 8px; }
+.post-date { color: var(--dim); margin: 0 0 32px; font-size: 14px; }
+.post p, .post li { margin: 0 0 1em; }
+.post ul { padding-left: 1.2em; }
+.post-foot { margin-top: 48px; padding-top: 12px; border-top: 2px dotted var(--ink); font-size: 14px; }
+.post-list { list-style: none; padding: 0; }
+.post-list li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--ink); }
+.post-list time { color: var(--dim); white-space: nowrap; font-size: 14px; }
+@media (max-width: 600px) { body { font-size: 16px; } .post-list li { flex-direction: column; gap: 0; } }

@@ -21,3 +21,9 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
