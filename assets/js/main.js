@@ -134,7 +134,9 @@ function openFromHash(fallback) {
 }
 
 const winRoot = desktop.querySelector('.windows');
-winRoot.addEventListener('wm:open', (e) => history.replaceState(null, '', toHash(e.detail.appId)));
+winRoot.addEventListener('wm:open', (e) => {
+  if (APP_IDS.includes(e.detail.appId)) history.replaceState(null, '', toHash(e.detail.appId));
+});
 winRoot.addEventListener('wm:close', (e) => {
   if (window.location.hash === toHash(e.detail.appId)) history.replaceState(null, '', window.location.pathname);
 });

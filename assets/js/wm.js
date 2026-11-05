@@ -27,6 +27,29 @@ export function createWM(root) {
     if (top) focus(top[0]);
   }
 
+  // Phone: full screen. Desktop: cascade, clamped to the viewport.
+  function place(el, index) {
+    if (isMobile(window.innerWidth)) {
+      el.classList.add('is-full');
+      Object.assign(el.style, { left: '', top: '', width: '', height: '' }); // keep z-index
+      return;
+    }
+    el.classList.remove('is-full');
+    const vp = viewport();
+    const width = Math.min(Number(el.dataset.w), vp.w - 32);
+    const height = Math.min(Number(el.dataset.h), vp.h - 60);
+    const pos = clampToViewport({ ...cascade(index, vp), w: width, h: height }, vp);
+    Object.assign(el.style, { left: `${pos.x}px`, top: `${pos.y}px`, width: `${width}px`, height: `${height}px` });
+  }
+
+  let wasMobile = isMobile(window.innerWidth);
+  window.addEventListener('resize', () => {
+    const mobile = isMobile(window.innerWidth);
+    if (mobile === wasMobile) return;
+    wasMobile = mobile;
+    [...wins.values()].forEach((w, i) => place(w.el, i));
+  });
+
   function enableDrag(el, handle) {
     handle.addEventListener('pointerdown', (e) => {
       if (isMobile(window.innerWidth) || e.target.closest('button')) return;
@@ -70,14 +93,9 @@ export function createWM(root) {
       <div class="wbody"></div>`;
     el.querySelector('.tbar-title').textContent = title;
 
-    if (isMobile(window.innerWidth)) {
-      el.classList.add('is-full');
-    } else {
-      const vp = viewport();
-      const width = Math.min(w, vp.w - 32);
-      const pos = clampToViewport({ ...cascade(opened, vp), w: width, h }, vp);
-      Object.assign(el.style, { left: `${pos.x}px`, top: `${pos.y}px`, width: `${width}px`, height: `${Math.min(h, vp.h - 60)}px` });
-    }
+    el.dataset.w = String(w);
+    el.dataset.h = String(h);
+    place(el, opened);
     opened += 1;
 
     el.querySelector('.tbar-close').addEventListener('click', () => close(appId));

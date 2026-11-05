@@ -194,3 +194,74 @@ html[data-color="true"] .icon-art img { filter: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- App content ---------- */
+.wbody h1 { font-size: 20px; line-height: 1.2; margin: 0 0 8px; }
+.wbody h2 { font-size: 14px; margin: 20px 0 6px; }
+.wbody p { margin: 0 0 10px; max-width: 62ch; }
+.display { font: 400 40px/1 var(--display) !important; }
+.meta { color: var(--dim); }
+.hint { color: var(--dim); font-size: 12px; }
+
+.btn {
+  display: inline-block; margin: 0 8px 8px 0; padding: 4px 14px;
+  border: 2px solid var(--ink); border-radius: 10px;
+  box-shadow: 2px 2px 0 var(--ink);
+  background: var(--paper); color: var(--ink);
+  text-decoration: none; font-weight: 600;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn:active { transform: translate(2px, 2px); box-shadow: none; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 12px 0; list-style: none; }
+.chips li { border: 1px solid var(--ink); padding: 0 8px; font-size: 12px; }
+
+/* Project windows carry their brand color. */
+.project-head {
+  display: flex; gap: 14px; align-items: center;
+  padding: 16px; background: var(--brand); color: #fff;
+  border-bottom: 2px solid var(--ink);
+}
+.project-head h1 { margin: 0; font-size: 24px; }
+.project-role { margin: 0 !important; opacity: 0.85; }
+.project-icon { border: 2px solid var(--ink); border-radius: 12px; background: #fff; }
+.project-pitch { font-size: 16px; }
+.project-how { padding-left: 22px; }
+.project-how li { margin-bottom: 6px; }
+.project .btn { border-color: var(--brand); box-shadow: 2px 2px 0 var(--brand); color: var(--brand); }
+.project .btn:hover { background: var(--brand); color: #fff; }
+
+.shots { display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 14px; }
+.shot { flex: none; width: 150px; padding: 0; border: 2px solid var(--ink); background: var(--paper); cursor: pointer; }
+.shot img { display: block; width: 100%; }
+
+/* The develop effect: 1-bit until hovered, focused or tapped. */
+.develop { position: relative; overflow: hidden; }
+.develop img { filter: grayscale(1) contrast(3) brightness(1.1); transition: filter 1.2s var(--step); }
+.develop::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: var(--dots); mix-blend-mode: multiply; opacity: 0.9;
+  transition: opacity 1.2s var(--step);
+}
+.develop:hover img, .develop:focus-visible img, .develop.is-developed img { filter: none; }
+.develop:hover::after, .develop:focus-visible::after, .develop.is-developed::after { opacity: 0; }
+html[data-color="true"] .develop img { filter: none; }
+html[data-color="true"] .develop::after { opacity: 0; }
+
+.folder { display: grid; grid-template-columns: repeat(auto-fill, 96px); gap: 8px; }
+.folder-item { display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: 0; font: inherit; font-size: 12px; cursor: pointer; color: inherit; }
+.folder-item:hover .icon-label, .folder-item:focus-visible .icon-label { background: var(--ink); color: var(--paper); }
+.folder-item:focus-visible { outline: 0; }
+
+.trash-item { border-top: 2px dotted var(--ink); padding-top: 8px; margin-top: 12px; }
+.trash-item h2 { margin-top: 0; }
+
+.shelf { display: flex; gap: 20px; align-items: center; }
+.book-spine {
+  width: 44px; height: 170px; flex: none;
+  border: 2px solid var(--ink); background: var(--ink); color: var(--paper);
+  display: grid; place-items: center; box-shadow: 3px 3px 0 var(--dim);
+}
+.book-spine span { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 12px; }
+
+.garage-art svg { width: 96px; height: 96px; }
