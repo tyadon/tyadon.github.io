@@ -20,3 +20,19 @@ test('build excludes private dirs', () => {
 test('CNAME is treyyadon.space', () => {
   assert.equal(readFileSync(join(ROOT, 'CNAME'), 'utf8').trim(), 'treyyadon.space');
 });
+
+test('fallback lists projects and contact', async () => {
+  const page = readFileSync(join(site, 'index.html'), 'utf8');
+  const fallback = page.slice(page.indexOf('<main id="fallback"'), page.indexOf('</main>'));
+  for (const s of ['whosgotit.app', 'pourmemory.com', 'mailto:itstreyyadon@gmail.com']) {
+    assert.ok(fallback.includes(s), s);
+  }
+});
+
+test('embedded data parses', async () => {
+  const page = readFileSync(join(site, 'index.html'), 'utf8');
+  const m = page.match(/<script type="application\/json" id="treyos-data">([\s\S]*?)<\/script>/);
+  assert.ok(m, 'data script present');
+  const data = JSON.parse(m[1]);
+  assert.ok(Array.isArray(data.projects));
+});
