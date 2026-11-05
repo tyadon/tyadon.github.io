@@ -11,6 +11,7 @@ export function validateEntry({ name = '', message = '', website = '', hp = '' }
   if (n.length < 1 || n.length > 40) return { ok: false, error: 'Your name needs to be 1 to 40 characters.' };
   if (m.length < 1 || m.length > 500) return { ok: false, error: 'Your message needs to be 1 to 500 characters.' };
   if (w && !/^https?:\/\//i.test(w)) return { ok: false, error: 'Your website needs to start with http:// or https://.' };
+  if (w.length > 200) return { ok: false, error: 'Your website address needs to be 200 characters or fewer.' };
   return { ok: true };
 }
 

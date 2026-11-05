@@ -14,7 +14,7 @@ export function renderEntries(entries) {
 const FORM = html`<form class="gb-form" novalidate>
   <label>Name <input name="name" maxlength="40" required autocomplete="nickname"></label>
   <label>Message <textarea name="message" maxlength="500" rows="3" required></textarea></label>
-  <label>Website (optional) <input name="website" type="url" placeholder="https://"></label>
+  <label>Website (optional) <input name="website" type="url" maxlength="200" placeholder="https://"></label>
   <label class="gb-hp" aria-hidden="true">Leave this empty <input name="hp" tabindex="-1" autocomplete="off"></label>
   <button class="btn" type="submit">Sign the guestbook</button>
   <p class="gb-status" role="status"></p>

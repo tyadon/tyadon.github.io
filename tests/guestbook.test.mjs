@@ -71,3 +71,8 @@ test('hits use the API shape', async () => {
   assert.deepEqual(calls.map((c) => c[1]), ['GET', 'POST']);
   assert.ok(calls.every((c) => c[0].endsWith('/api/hits')));
 });
+
+test('validateEntry rejects a website over 200 characters', () => {
+  assert.equal(validateEntry({ ...ok, website: 'https://' + 'a'.repeat(200) }).ok, false);
+  assert.equal(validateEntry({ ...ok, website: 'https://' + 'a'.repeat(150) }).ok, true);
+});

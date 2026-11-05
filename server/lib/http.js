@@ -26,6 +26,13 @@ export function json(body, status, origin) {
   });
 }
 
+// Browsers always send Origin on cross-site POSTs; anything else is not our site.
+export function rejectForeign(request) {
+  const origin = request.headers.get('origin');
+  if (origin && ORIGINS.has(origin)) return null;
+  return json({ message: 'forbidden' }, 403, origin);
+}
+
 export function preflight(request) {
   return new Response(null, { status: 204, headers: corsHeaders(request.headers.get('origin')) });
 }

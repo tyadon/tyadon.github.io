@@ -1,6 +1,6 @@
 // GET: latest signatures. POST: sign. Validation and rate limits live in Postgres (sign_guestbook).
 import { sql } from '../lib/db.js';
-import { json, preflight, clientIp } from '../lib/http.js';
+import { json, preflight, clientIp, rejectForeign } from '../lib/http.js';
 
 export function OPTIONS(request) {
   return preflight(request);
@@ -12,6 +12,8 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  const blocked = rejectForeign(request);
+  if (blocked) return blocked;
   const origin = request.headers.get('origin');
   let body;
   try { body = await request.json(); } catch { return json({ message: 'bad request' }, 400, origin); }

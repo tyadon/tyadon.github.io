@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cascade, clampToViewport, isMobile } from '../assets/js/wm-core.js';
+import { cascade, clampToViewport, isMobile, escClosesWindow } from '../assets/js/wm-core.js';
 
 test('cascade steps 24px from 120,48', () => {
   const vp = { w: 1440, h: 900 };
@@ -25,4 +25,12 @@ test('isMobile below 700px', () => {
   assert.equal(isMobile(375), true);
   assert.equal(isMobile(699), true);
   assert.equal(isMobile(1024), false);
+});
+
+test('Esc does not close a window while typing or while a menu is open', () => {
+  assert.equal(escClosesWindow({ tag: 'BODY', menuOpen: false }), true);
+  assert.equal(escClosesWindow({ tag: 'SECTION', menuOpen: false }), true);
+  assert.equal(escClosesWindow({ tag: 'TEXTAREA', menuOpen: false }), false);
+  assert.equal(escClosesWindow({ tag: 'INPUT', menuOpen: false }), false);
+  assert.equal(escClosesWindow({ tag: 'BODY', menuOpen: true }), false);
 });

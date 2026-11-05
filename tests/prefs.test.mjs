@@ -19,12 +19,19 @@ test('round-trips values', () => {
 test('throwing storage falls back silently', () => {
   const bad = { getItem() { throw new Error('blocked'); }, setItem() { throw new Error('blocked'); } };
   const { getPref, setPref } = createPrefs(bad);
-  assert.doesNotThrow(() => setPref('crt', true));
   assert.equal(getPref('crt', false), false);
+  assert.doesNotThrow(() => setPref('crt', true));
 });
 
 test('corrupt stored value falls back', () => {
   const s = mapStorage();
   s.setItem('treyos.crt', '{not json');
   assert.equal(createPrefs(s).getPref('crt', false), false);
+});
+
+test('throwing storage still remembers values for this page', () => {
+  const bad = { getItem() { throw new Error('blocked'); }, setItem() { throw new Error('blocked'); } };
+  const { getPref, setPref } = createPrefs(bad);
+  setPref('crt', true);
+  assert.equal(getPref('crt', false), true);
 });

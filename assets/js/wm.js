@@ -1,5 +1,5 @@
 // Window manager: one window per app id, drag by title bar, Esc to close.
-import { cascade, clampToViewport, isMobile } from './wm-core.js';
+import { cascade, clampToViewport, isMobile, escClosesWindow } from './wm-core.js';
 
 export function createWM(root) {
   const wins = new Map(); // appId -> { el, returnFocus }
@@ -113,6 +113,8 @@ export function createWM(root) {
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
+    const menuOpen = Boolean(document.querySelector('.menu-items:not([hidden])'));
+    if (!escClosesWindow({ tag: document.activeElement?.tagName, menuOpen })) return;
     const focused = [...wins.entries()].find(([, w]) => w.el.classList.contains('is-focused'));
     if (focused) close(focused[0]);
   });

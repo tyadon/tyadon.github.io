@@ -4,7 +4,7 @@ create table if not exists public.guestbook (
   id bigint generated always as identity primary key,
   name text not null check (char_length(name) between 1 and 40),
   message text not null check (char_length(message) between 1 and 500),
-  website text check (website is null or website ~ '^https?://'),
+  website text check (website is null or (website ~* '^https?://' and char_length(website) <= 200)),
   created_at timestamptz not null default now()
 );
 
@@ -36,9 +36,11 @@ begin
   if coalesce(p_hp, '') <> '' then raise exception 'rejected'; end if;
   if char_length(v_name) not between 1 and 40 then raise exception 'name must be 1 to 40 characters'; end if;
   if char_length(v_message) not between 1 and 500 then raise exception 'message must be 1 to 500 characters'; end if;
-  if v_website is not null and v_website !~ '^https?://' then raise exception 'website must start with http:// or https://'; end if;
+  if v_website is not null and v_website !~* '^https?://' then raise exception 'website must start with http:// or https://'; end if;
+  if char_length(coalesce(v_website, '')) > 200 then raise exception 'website must be 200 characters or fewer'; end if;
   if (v_name || ' ' || v_message) ~* '\m(fuck|shit|cunt|nigger|faggot|retard)' then raise exception 'keep it friendly'; end if;
 
+  perform pg_advisory_xact_lock(hashtext(v_hash)); -- serialize concurrent posts from one IP
   delete from public.guestbook_rate where at < now() - interval '1 hour';
   if (select count(*) from public.guestbook_rate where ip_hash = v_hash) >= 3 then
     raise exception 'slow down: try again later';
@@ -71,3 +73,7 @@ as $$
   select count from public.hits where id = 1;
 $$;
 
+
+-- Existing installs: replace the website check with the length-capped one.
+alter table public.guestbook drop constraint if exists guestbook_website_check;
+alter table public.guestbook add constraint guestbook_website_check check (website is null or (website ~* '^https?://' and char_length(website) <= 200));

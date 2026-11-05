@@ -19,6 +19,11 @@ export function clampToViewport(rect, viewport, menubar = 28) {
   return { x, y };
 }
 
+// Esc closes the focused window unless the visitor is typing or a menu is open.
+export function escClosesWindow({ tag, menuOpen }) {
+  return !menuOpen && tag !== 'INPUT' && tag !== 'TEXTAREA';
+}
+
 export function isMobile(width) {
   return width < 700;
 }

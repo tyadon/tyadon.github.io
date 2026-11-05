@@ -3,8 +3,10 @@
 const PREFIX = 'treyos.';
 
 export function createPrefs(storage) {
+  const memory = new Map(); // what this page has set, even if storage refuses it
   return {
     getPref(key, fallback) {
+      if (memory.has(key)) return memory.get(key);
       try {
         const v = storage?.getItem(PREFIX + key);
         return v === null || v === undefined ? fallback : JSON.parse(v);
@@ -13,6 +15,7 @@ export function createPrefs(storage) {
       }
     },
     setPref(key, value) {
+      memory.set(key, value);
       try { storage?.setItem(PREFIX + key, JSON.stringify(value)); } catch { /* not saved, still applied */ }
     },
   };

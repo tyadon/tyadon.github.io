@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { corsHeaders, clientIp, json } from '../server/lib/http.js';
+import { corsHeaders, clientIp, json, rejectForeign } from '../server/lib/http.js';
 
 test('cors allows the site, the github.io domain and local preview only', () => {
   for (const o of ['https://treyyadon.space', 'https://www.treyyadon.space', 'https://tyadon.github.io', 'http://localhost:4000']) {
@@ -22,4 +22,11 @@ test('json sets status, content type and cors', async () => {
   assert.equal(res.headers.get('content-type'), 'application/json');
   assert.equal(res.headers.get('access-control-allow-origin'), 'https://treyyadon.space');
   assert.deepEqual(await res.json(), { ok: 1 });
+});
+
+test('rejectForeign blocks writes from other sites', () => {
+  const req = (origin) => new Request('https://api.treyyadon.space/api/hits', { method: 'POST', headers: origin ? { origin } : {} });
+  assert.equal(rejectForeign(req('https://treyyadon.space')), null);
+  assert.equal(rejectForeign(req('https://evil.example')).status, 403);
+  assert.equal(rejectForeign(req(null)).status, 403);
 });

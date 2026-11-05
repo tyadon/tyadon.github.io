@@ -63,3 +63,7 @@ test('projects', () => {
   assert.equal(by.pourmemory.role, 'Co-founder & CTO');
   assert.ok(by.pourmemory.links.map(l => l.url).includes('https://pourmemory.com'));
 });
+
+test('readme instructions work on phones too', () => {
+  assert.match(content.readme.paragraphs.join(' '), /tap/i);
+});
