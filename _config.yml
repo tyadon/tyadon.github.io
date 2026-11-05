@@ -1,0 +1,23 @@
+title: Trey Yadon
+description: Trey Yadon's computer. Apps, photos, notes and a dog named Newton.
+url: https://treyyadon.space
+baseurl: ""
+permalink: /notes/:title/
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+feed:
+  path: feed.xml
+exclude:
+  - docs
+  - .superpowers
+  - tests
+  - scripts
+  - supabase
+  - package.json
+  - package-lock.json
+  - node_modules
+  - Gemfile
+  - Gemfile.lock
+  - README.md
