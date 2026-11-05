@@ -353,3 +353,17 @@ html[data-crt="true"] body::after {
 .gb-entries li { border-top: 2px dotted var(--ink); padding-top: 8px; margin-top: 8px; }
 .gb-msg { white-space: pre-wrap; overflow-wrap: anywhere; }
 .hits[hidden] { display: none; }
+
+/* Desktop label: the owner's name, printed on the desk like a volume label. */
+.desk-label {
+  position: absolute; left: 16px; bottom: 64px; z-index: 1;
+  padding: 8px 12px; background: var(--paper);
+  border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+}
+.desk-label h1 { margin: 0; font: 400 34px/1 var(--display); }
+.desk-label p { margin: 2px 0 0; font-size: 12px; }
+@media (max-width: 699px) {
+  .desk-label { left: 12px; right: 12px; bottom: 56px; padding: 6px 10px; }
+  .desk-label h1 { font-size: 26px; }
+  .icons { bottom: 136px; }
+}

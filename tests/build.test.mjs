@@ -74,3 +74,43 @@ test('post pages work without the desktop', () => {
   assert.ok(page.includes('<article'));
   assert.equal(page.includes('main.js'), false);
 });
+
+function ldBlocks(page) {
+  return [...page.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+}
+
+test('sitemap lists the homepage and every post', () => {
+  const xml = readFileSync(join(site, 'sitemap.xml'), 'utf8');
+  assert.ok(xml.includes('<loc>https://treyyadon.space/</loc>'));
+  for (const s of SLUGS) assert.ok(xml.includes(`https://treyyadon.space/notes/${s}/`), s);
+  assert.equal(/server|docs|superpowers/.test(xml), false);
+});
+
+test('robots.txt points at the sitemap', () => {
+  const txt = readFileSync(join(site, 'robots.txt'), 'utf8');
+  assert.match(txt, /Sitemap: https:\/\/treyyadon\.space\/sitemap\.xml/);
+});
+
+test('homepage describes Trey as a Person linked to his profiles', () => {
+  const page = readFileSync(join(site, 'index.html'), 'utf8');
+  const person = ldBlocks(page).find((b) => b['@type'] === 'Person');
+  assert.ok(person, 'Person block');
+  assert.equal(person.name, 'Trey Yadon');
+  assert.equal(person.url, 'https://treyyadon.space/');
+  assert.ok(person.sameAs.includes('https://www.linkedin.com/in/ryadon'));
+  assert.ok(person.sameAs.includes('https://github.com/tyadon'));
+});
+
+test('homepage title and share image', () => {
+  const page = readFileSync(join(site, 'index.html'), 'utf8');
+  assert.match(page, /<title>Trey Yadon \| Builder in San Diego<\/title>/);
+  assert.match(page, /<meta property="og:image" content="https:\/\/treyyadon\.space\/assets\/img\/og\.png"/);
+  assert.match(page, /name="twitter:card" content="summary_large_image"/);
+  assert.ok(existsSync(join(site, 'assets/img/og.png')));
+});
+
+test('name and bio are visible text outside the fallback', () => {
+  const page = readFileSync(join(site, 'index.html'), 'utf8');
+  const desktop = page.slice(page.indexOf('<div id="desktop"'));
+  assert.match(desktop, /<h1[^>]*>Trey Yadon<\/h1>/);
+});

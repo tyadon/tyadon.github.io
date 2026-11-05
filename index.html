@@ -1,6 +1,5 @@
 ---
 layout: null
-title: Trey Yadon
 ---
 {%- assign c = site.data.content -%}
 <!doctype html>
@@ -10,6 +9,18 @@ title: Trey Yadon
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% seo %}
   {% feed_meta %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Trey Yadon",
+    "url": "https://treyyadon.space/",
+    "image": "https://treyyadon.space/assets/img/og.png",
+    "description": "Builder in San Diego. Solo founder of Who's Got It and co-founder and CTO of Pour Memory.",
+    "homeLocation": { "@type": "Place", "name": "San Diego, California" },
+    "sameAs": ["https://www.linkedin.com/in/ryadon", "https://github.com/tyadon"]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=VT323&display=swap" rel="stylesheet">
@@ -49,6 +60,10 @@ title: Trey Yadon
   </div>
 
   <div id="desktop" aria-label="TreyOS desktop">
+    <header class="desk-label">
+      <h1>Trey Yadon</h1>
+      <p>Builder in San Diego. This is my computer.</p>
+    </header>
     <nav class="menubar" aria-label="Menu bar"></nav>
     <div class="icons" role="list"></div>
     <div class="windows"></div>

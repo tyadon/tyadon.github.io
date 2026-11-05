@@ -1,5 +1,6 @@
 title: Trey Yadon
-description: Trey Yadon's computer. Apps, photos, notes and a dog named Newton.
+tagline: Builder in San Diego
+description: Trey Yadon builds apps in San Diego, including Who's Got It and Pour Memory. This is his computer, with photos, notes and a dog named Newton.
 url: https://treyyadon.space
 baseurl: ""
 permalink: /notes/:title/
@@ -7,6 +8,7 @@ markdown: kramdown
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 feed:
   path: feed.xml
 exclude:
@@ -28,3 +30,7 @@ defaults:
       type: posts
     values:
       layout: post
+  - scope:
+      path: ""
+    values:
+      image: /assets/img/og.png
