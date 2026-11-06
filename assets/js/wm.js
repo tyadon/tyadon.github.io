@@ -1,10 +1,9 @@
 // Window manager: one window per app id, drag by title bar, Esc to close.
-import { cascade, clampToViewport, isMobile, escClosesWindow } from './wm-core.js';
+import { placeWindow, clampToViewport, isMobile, escClosesWindow } from './wm-core.js';
 
 export function createWM(root) {
   const wins = new Map(); // appId -> { el, returnFocus }
   let z = 10;
-  let opened = 0;
 
   const viewport = () => ({ w: window.innerWidth, h: window.innerHeight });
 
@@ -27,8 +26,8 @@ export function createWM(root) {
     if (top) focus(top[0]);
   }
 
-  // Phone: full screen. Desktop: cascade, clamped to the viewport.
-  function place(el, index) {
+  // Phone: full screen. Desktop: the emptiest spot on the desk, clamped to the viewport.
+  function place(el) {
     if (isMobile(window.innerWidth)) {
       el.classList.add('is-full');
       Object.assign(el.style, { left: '', top: '', width: '', height: '' }); // keep z-index
@@ -38,7 +37,12 @@ export function createWM(root) {
     const vp = viewport();
     const width = Math.min(Number(el.dataset.w), vp.w - 32);
     const height = Math.min(Number(el.dataset.h), vp.h - 60);
-    const pos = clampToViewport({ ...cascade(index, vp), w: width, h: height }, vp);
+    const others = [...wins.values()]
+      .map((o) => o.el)
+      .filter((o) => o !== el && o.isConnected && !o.classList.contains('is-full'))
+      .map((o) => ({ x: o.offsetLeft, y: o.offsetTop, w: o.offsetWidth, h: o.offsetHeight }));
+    const spot = placeWindow({ w: width, h: height }, vp, others);
+    const pos = clampToViewport({ ...spot, w: width, h: height }, vp);
     Object.assign(el.style, { left: `${pos.x}px`, top: `${pos.y}px`, width: `${width}px`, height: `${height}px` });
   }
 
@@ -47,7 +51,7 @@ export function createWM(root) {
     const mobile = isMobile(window.innerWidth);
     if (mobile === wasMobile) return;
     wasMobile = mobile;
-    [...wins.values()].forEach((w, i) => place(w.el, i));
+    [...wins.values()].forEach((w) => place(w.el));
   });
 
   function enableDrag(el, handle) {
@@ -95,8 +99,7 @@ export function createWM(root) {
 
     el.dataset.w = String(w);
     el.dataset.h = String(h);
-    place(el, opened);
-    opened += 1;
+    place(el);
 
     el.querySelector('.tbar-close').addEventListener('click', () => close(appId));
     el.addEventListener('pointerdown', () => focus(appId));
